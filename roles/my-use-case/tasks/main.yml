@@ -9,9 +9,9 @@
 # Auto remediation w/ SNOW and Ansible
 #
 - set_fact:
-    use_case_ext_src_2: "https://github.com/dynatrace-ace/ace-box-ext-template.git" # TDB
-    use_case_ext_name_2: "ace-box-ext-template" # TDB
-    use_case_ext_version_2: "HEAD" # TBD
+    use_case_ext_src_2: "https://github.com/dynatrace-ace/ace-box-ext-demo-auto-remediation-easytravel.git"
+    use_case_ext_name_2: "ace-box-ext-demo-auto-remediation-easytravel"
+    use_case_ext_version_2: "HEAD"
 
 - name: Clone external use case
   ansible.builtin.git:
