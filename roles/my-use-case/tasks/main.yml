@@ -1,3 +1,45 @@
 ---
+#
+# Auto remediation w/ Ansible
+#
 - include_role:
     name: demo-auto-remediation-ansible
+
+#
+# Auto remediation w/ SNOW and Ansible
+#
+- set_fact:
+    use_case_ext_src_2: "https://github.com/dynatrace-ace/ace-box-ext-template.git" # TDB
+    use_case_ext_name_2: "ace-box-ext-template" # TDB
+    use_case_ext_version_2: "HEAD" # TBD
+
+- name: Clone external use case
+  ansible.builtin.git:
+    repo: "{{ use_case_ext_src_2 }}"
+    version: "{{ use_case_ext_version_2 }}"
+    dest: "/tmp/{{ use_case_ext_name_2 }}"
+
+- name: Synchronize Use Case role
+  synchronize:
+    src: "/tmp/{{ use_case_ext_name_2 }}/roles/{{ use_case_ext_default_name }}/"
+    dest: "/home/{{ ace_box_user }}/ansible/roles/{{ use_case_ext_name_2 }}/"
+
+- name: Synchronize roles
+  synchronize:
+    src: "/tmp/{{ use_case_ext_name_2 }}/roles/"
+    dest: "/home/{{ ace_box_user }}/ansible/roles/"
+    rsync_opts:
+      - "--exclude={{ use_case_ext_default_name }}"
+
+- name: Synchronize var override
+  synchronize:
+    src: "/tmp/{{ use_case_ext_name_2 }}/ace-ext.config.yml"
+    dest: "/home/{{ ace_box_user }}/ansible/{{ use_case_ext_name_2 }}.config.yml"
+  ignore_errors: True
+
+- name: Source var override
+  include_vars: "/home/{{ ace_box_user }}/ansible/{{ use_case_ext_name_2 }}.config.yml"
+  ignore_errors: True
+
+- include_role:
+    name: "{{ use_case_ext_name_2 }}"
