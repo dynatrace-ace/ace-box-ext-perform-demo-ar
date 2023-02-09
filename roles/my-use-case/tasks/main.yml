@@ -42,4 +42,4 @@
 # Auto remediation w/ Ansible
 #
 - include_tasks:
-    name: demo-auto-remediation-ansible
+    file: demo-auto-remediation-ansible.yml
