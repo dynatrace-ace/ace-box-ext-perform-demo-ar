@@ -1,11 +1,5 @@
 ---
 #
-# Auto remediation w/ Ansible
-#
-- include_role:
-    name: demo-auto-remediation-ansible
-
-#
 # Auto remediation w/ SNOW and Ansible
 #
 - set_fact:
@@ -43,3 +37,9 @@
 
 - include_role:
     name: "{{ use_case_ext_name_2 }}"
+
+#
+# Auto remediation w/ Ansible
+#
+- include_tasks:
+    name: demo-auto-remediation-ansible
