@@ -98,7 +98,7 @@
 
 - include_role:
     name: demo-auto-remediation-ansible
-    file: configure-awx.yml
+    tasks_from: configure-awx
 
 # Include use case specific Dashboard values
 - set_fact:
@@ -114,4 +114,4 @@
 # Trigger use case at the very end to make sure all tools are available
 - include_role:
     name: demo-auto-remediation-ansible
-    file: trigger-use-case.yml
+    tasks_from: trigger-use-case
